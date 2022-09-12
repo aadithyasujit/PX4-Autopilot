@@ -251,6 +251,11 @@ bool DeviceExternal(uint32_t device_id)
 	case device::Device::DeviceBusType_I2C:
 #if defined(CONFIG_I2C)
 		external = px4_i2c_bus_external(id.devid_s.bus);
+
+		if (px4_i2c_treat_sensor_as_internal(device_id)) {
+			external = false;
+		}
+
 #endif // CONFIG_I2C
 		break;
 

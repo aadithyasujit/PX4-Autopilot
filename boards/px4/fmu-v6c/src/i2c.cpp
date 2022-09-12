@@ -32,9 +32,40 @@
  ****************************************************************************/
 
 #include <px4_arch/i2c_hw_description.h>
+#include <lib/drivers/device/Device.hpp>
 
 constexpr px4_i2c_bus_t px4_i2c_buses[I2C_BUS_MAX_BUS_ITEMS] = {
 	initI2CBusExternal(1),
 	initI2CBusExternal(2),
 	initI2CBusInternal(4),
 };
+
+#ifdef BOARD_OVERRIDE_I2C_TREAT_SENSOR_AS_INTERNAL
+bool px4_i2c_treat_sensor_as_internal(uint32_t const device_id)
+{
+	// The internal baro and mag on Pixhawk 6C are on an external
+	// bus. On rev 0, the bus is actually exposed externally, on
+	// rev 1+, it is properly internal, however, still marked as
+	// external for compatibility.
+
+	// device_id: 4028193
+	device::Device::DeviceId device_id_baro{};
+	device_id_baro.devid_s.bus_type = device::Device::DeviceBusType_I2C;
+	device_id_baro.devid_s.bus = 4;
+	device_id_baro.devid_s.address = 0x77;
+	device_id_baro.devid_s.devtype = DRV_BARO_DEVTYPE_MS5611;
+
+	// device_id: 396321
+	device::Device::DeviceId device_id_mag{};
+	device_id_mag.devid_s.bus_type = device::Device::DeviceBusType_I2C;
+	device_id_mag.devid_s.bus = 4;
+	device_id_mag.devid_s.address = 0xc;
+	device_id_mag.devid_s.devtype = DRV_MAG_DEVTYPE_IST8310;
+
+	if (device_id == device_id_baro.devid || device_id == device_id_mag.devid) {
+		return true;
+	}
+
+	return false;
+}
+#endif

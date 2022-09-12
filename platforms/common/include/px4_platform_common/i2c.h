@@ -53,6 +53,12 @@ __EXPORT extern const px4_i2c_bus_t px4_i2c_buses[I2C_BUS_MAX_BUS_ITEMS]; ///< b
 __EXPORT bool px4_i2c_bus_external(const px4_i2c_bus_t &bus);
 
 /**
+ * runtime-check if a sensor on an external channel should be treated as internal.
+ * This can be overridden by a board to add run-time checks.
+ */
+__EXPORT bool px4_i2c_treat_sensor_as_internal(uint32_t device_id);
+
+/**
  * runtime-check if a board has a specific bus as external.
  */
 static inline bool px4_i2c_bus_external(int bus)

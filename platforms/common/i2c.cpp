@@ -44,6 +44,13 @@ bool px4_i2c_bus_external(const px4_i2c_bus_t &bus)
 }
 #endif
 
+#ifndef BOARD_OVERRIDE_I2C_TREAT_SENSOR_AS_INTERNAL
+bool px4_i2c_treat_sensor_as_internal(uint32_t /* device_id */)
+{
+	return false;
+}
+#endif
+
 bool I2CBusIterator::next()
 {
 	while (++_index < I2C_BUS_MAX_BUS_ITEMS && px4_i2c_buses[_index].bus != -1) {
