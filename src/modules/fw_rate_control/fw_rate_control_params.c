@@ -45,84 +45,48 @@
  *
  */
 
-// /**
-//  * Attitude Roll Time Constant
-//  *
-//  * This defines the latency between a roll step input and the achieved setpoint
-//  * (inverse to a P gain). Half a second is a good start value and fits for
-//  * most average systems. Smaller systems may require smaller values, but as
-//  * this will wear out servos faster, the value should only be decreased as
-//  * needed.
-//  *
-//  * @unit s
-//  * @min 0.4
-//  * @max 1.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_R_TC, 0.4f);
+/**
+ * Pitch rate proportional gain.
+ *
+ * Pitch rate proportional gain, i.e. control output for angular speed error 1 rad/s.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_PR_P, 0.08f);
 
-// /**
-//  * Attitude pitch time constant
-//  *
-//  * This defines the latency between a pitch step input and the achieved setpoint
-//  * (inverse to a P gain). Half a second is a good start value and fits for
-//  * most average systems. Smaller systems may require smaller values, but as
-//  * this will wear out servos faster, the value should only be decreased as
-//  * needed.
-//  *
-//  * @unit s
-//  * @min 0.2
-//  * @max 1.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_P_TC, 0.4f);
+/**
+ * Pitch rate derivative gain.
+ *
+ * Pitch rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_PR_D, 0.f);
 
-// /**
-//  * Pitch rate proportional gain.
-//  *
-//  * Pitch rate proportional gain, i.e. control output for angular speed error 1 rad/s.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_PR_P, 0.08f);
-
-// /**
-//  * Pitch rate derivative gain.
-//  *
-//  * Pitch rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_PR_D, 0.f);
-
-// /**
-//  * Pitch rate integrator gain.
-//  *
-//  * This gain defines how much control response will result out of a steady
-//  * state error. It trims any constant error.
-//  *
-//  * @unit %/rad
-//  * @min 0.0
-//  * @max 0.5
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_PR_I, 0.1f);
+/**
+ * Pitch rate integrator gain.
+ *
+ * This gain defines how much control response will result out of a steady
+ * state error. It trims any constant error.
+ *
+ * @unit %/rad
+ * @min 0.0
+ * @max 0.5
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_PR_I, 0.1f);
 
 // /**
 //  * Maximum positive / up pitch rate.
@@ -154,75 +118,75 @@
 //  */
 // PARAM_DEFINE_FLOAT(FW_P_RMAX_NEG, 60.0f);
 
-// /**
-//  * Pitch rate integrator limit
-//  *
-//  * The portion of the integrator part in the control surface deflection is
-//  * limited to this value
-//  *
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_PR_IMAX, 0.4f);
+/**
+ * Pitch rate integrator limit
+ *
+ * The portion of the integrator part in the control surface deflection is
+ * limited to this value
+ *
+ * @min 0.0
+ * @max 1.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_PR_IMAX, 0.4f);
 
-// /**
-//  * Roll rate proportional Gain
-//  *
-//  * Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_RR_P, 0.05f);
+/**
+ * Roll rate proportional Gain
+ *
+ * Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_RR_P, 0.05f);
 
-// /**
-//  * Roll rate derivative Gain
-//  *
-//  * Roll rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_RR_D, 0.00f);
+/**
+ * Roll rate derivative Gain
+ *
+ * Roll rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_RR_D, 0.00f);
 
-// /**
-//  * Roll rate integrator Gain
-//  *
-//  * This gain defines how much control response will result out of a steady
-//  * state error. It trims any constant error.
-//  *
-//  * @unit %/rad
-//  * @min 0.0
-//  * @max 0.2
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_RR_I, 0.1f);
+/**
+ * Roll rate integrator Gain
+ *
+ * This gain defines how much control response will result out of a steady
+ * state error. It trims any constant error.
+ *
+ * @unit %/rad
+ * @min 0.0
+ * @max 0.2
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_RR_I, 0.1f);
 
-// /**
-//  * Roll integrator anti-windup
-//  *
-//  * The portion of the integrator part in the control surface deflection is limited to this value.
-//  *
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_RR_IMAX, 0.2f);
+/**
+ * Roll integrator anti-windup
+ *
+ * The portion of the integrator part in the control surface deflection is limited to this value.
+ *
+ * @min 0.0
+ * @max 1.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_RR_IMAX, 0.2f);
 
 // /**
 //  * Maximum roll rate
@@ -239,62 +203,62 @@
 //  */
 // PARAM_DEFINE_FLOAT(FW_R_RMAX, 70.0f);
 
-// /**
-//  * Yaw rate proportional gain
-//  *
-//  * Yaw rate proportional gain, i.e. control output for angular speed error 1 rad/s.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_YR_P, 0.05f);
+/**
+ * Yaw rate proportional gain
+ *
+ * Yaw rate proportional gain, i.e. control output for angular speed error 1 rad/s.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_YR_P, 0.05f);
 
-// /**
-//  * Yaw rate derivative gain
-//  *
-//  * Yaw rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 3
-//  * @increment 0.005
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_YR_D, 0.0f);
+/**
+ * Yaw rate derivative gain
+ *
+ * Yaw rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 1.0
+ * @decimal 3
+ * @increment 0.005
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_YR_D, 0.0f);
 
-// /**
-//  * Yaw rate integrator gain
-//  *
-//  * This gain defines how much control response will result out of a steady
-//  * state error. It trims any constant error.
-//  *
-//  * @unit %/rad
-//  * @min 0.0
-//  * @max 50.0
-//  * @decimal 1
-//  * @increment 0.5
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_YR_I, 0.1f);
+/**
+ * Yaw rate integrator gain
+ *
+ * This gain defines how much control response will result out of a steady
+ * state error. It trims any constant error.
+ *
+ * @unit %/rad
+ * @min 0.0
+ * @max 50.0
+ * @decimal 1
+ * @increment 0.5
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_YR_I, 0.1f);
 
-// /**
-//  * Yaw rate integrator limit
-//  *
-//  * The portion of the integrator part in the control surface deflection is
-//  * limited to this value
-//  *
-//  * @min 0.0
-//  * @max 1.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_YR_IMAX, 0.2f);
+/**
+ * Yaw rate integrator limit
+ *
+ * The portion of the integrator part in the control surface deflection is
+ * limited to this value
+ *
+ * @min 0.0
+ * @max 1.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_YR_IMAX, 0.2f);
 
 // /**
 //  * Maximum yaw rate
@@ -394,49 +358,49 @@
 //  */
 // PARAM_DEFINE_FLOAT(FW_W_RMAX, 30.0f);
 
-// /**
-//  * Roll rate feed forward
-//  *
-//  * Direct feed forward from rate setpoint to control surface output. Use this
-//  * to obtain a tigher response of the controller without introducing
-//  * noise amplification.
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 10.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_RR_FF, 0.5f);
+/**
+ * Roll rate feed forward
+ *
+ * Direct feed forward from rate setpoint to control surface output. Use this
+ * to obtain a tigher response of the controller without introducing
+ * noise amplification.
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 10.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_RR_FF, 0.5f);
 
-// /**
-//  * Pitch rate feed forward
-//  *
-//  * Direct feed forward from rate setpoint to control surface output
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 10.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_PR_FF, 0.5f);
+/**
+ * Pitch rate feed forward
+ *
+ * Direct feed forward from rate setpoint to control surface output
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 10.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_PR_FF, 0.5f);
 
-// /**
-//  * Yaw rate feed forward
-//  *
-//  * Direct feed forward from rate setpoint to control surface output
-//  *
-//  * @unit %/rad/s
-//  * @min 0.0
-//  * @max 10.0
-//  * @decimal 2
-//  * @increment 0.05
-//  * @group FW Attitude Control
-//  */
-// PARAM_DEFINE_FLOAT(FW_YR_FF, 0.3f);
+/**
+ * Yaw rate feed forward
+ *
+ * Direct feed forward from rate setpoint to control surface output
+ *
+ * @unit %/rad/s
+ * @min 0.0
+ * @max 10.0
+ * @decimal 2
+ * @increment 0.05
+ * @group FW Attitude Control
+ */
+PARAM_DEFINE_FLOAT(FW_YR_FF, 0.3f);
 
 // /**
 //  * Wheel steering rate feed forward

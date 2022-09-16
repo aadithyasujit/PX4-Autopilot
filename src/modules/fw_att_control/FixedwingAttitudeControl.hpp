@@ -33,8 +33,6 @@
 
 #pragma once
 
-#include <lib/rate_control/rate_control.hpp>
-
 #include <drivers/drv_hrt.h>
 #include "ecl_pitch_controller.h"
 #include "ecl_roll_controller.h"
@@ -109,9 +107,6 @@ public:
 
 private:
 	void Run() override;
-
-	void publishTorqueSetpoint(const hrt_abstime &timestamp_sample);
-	void publishThrustSetpoint(const hrt_abstime &timestamp_sample);
 
 	uORB::SubscriptionCallbackWorkItem _att_sub{this, ORB_ID(vehicle_attitude)};		/**< vehicle attitude */
 
@@ -209,21 +204,11 @@ private:
 		(ParamFloat<px4::params::FW_P_RMAX_NEG>) _param_fw_p_rmax_neg,
 		(ParamFloat<px4::params::FW_P_RMAX_POS>) _param_fw_p_rmax_pos,
 		(ParamFloat<px4::params::FW_P_TC>) _param_fw_p_tc,
-		(ParamFloat<px4::params::FW_PR_FF>) _param_fw_pr_ff,
-		(ParamFloat<px4::params::FW_PR_I>) _param_fw_pr_i,
-		(ParamFloat<px4::params::FW_PR_IMAX>) _param_fw_pr_imax,
-		(ParamFloat<px4::params::FW_PR_P>) _param_fw_pr_p,
-		(ParamFloat<px4::params::FW_PR_D>) _param_fw_pr_d,
 		(ParamFloat<px4::params::FW_PSP_OFF>) _param_fw_psp_off,
 
 		(ParamFloat<px4::params::FW_R_RMAX>) _param_fw_r_rmax,
 		(ParamFloat<px4::params::FW_R_TC>) _param_fw_r_tc,
 		(ParamFloat<px4::params::FW_RLL_TO_YAW_FF>) _param_fw_rll_to_yaw_ff,
-		(ParamFloat<px4::params::FW_RR_FF>) _param_fw_rr_ff,
-		(ParamFloat<px4::params::FW_RR_I>) _param_fw_rr_i,
-		(ParamFloat<px4::params::FW_RR_IMAX>) _param_fw_rr_imax,
-		(ParamFloat<px4::params::FW_RR_P>) _param_fw_rr_p,
-		(ParamFloat<px4::params::FW_RR_D>) _param_fw_rr_d,
 
 		(ParamBool<px4::params::FW_W_EN>) _param_fw_w_en,
 		(ParamFloat<px4::params::FW_W_RMAX>) _param_fw_w_rmax,
@@ -233,11 +218,6 @@ private:
 		(ParamFloat<px4::params::FW_WR_P>) _param_fw_wr_p,
 
 		(ParamFloat<px4::params::FW_Y_RMAX>) _param_fw_y_rmax,
-		(ParamFloat<px4::params::FW_YR_FF>) _param_fw_yr_ff,
-		(ParamFloat<px4::params::FW_YR_I>) _param_fw_yr_i,
-		(ParamFloat<px4::params::FW_YR_IMAX>) _param_fw_yr_imax,
-		(ParamFloat<px4::params::FW_YR_P>) _param_fw_yr_p,
-		(ParamFloat<px4::params::FW_YR_D>) _param_fw_yr_d,
 
 		(ParamFloat<px4::params::TRIM_PITCH>) _param_trim_pitch,
 		(ParamFloat<px4::params::TRIM_ROLL>) _param_trim_roll,
@@ -248,23 +228,6 @@ private:
 	ECL_PitchController		_pitch_ctrl;
 	ECL_YawController		_yaw_ctrl;
 	ECL_WheelController		_wheel_ctrl;
-	RateControl _rate_control; ///< class for rate control calculations
-
-	/**
-	 * @brief Update flap control setting
-	 *
-	 * @param dt Current time delta [s]
-	 */
-	void controlFlaps(const float dt);
-
-	/**
-	 * @brief Update spoiler control setting
-	 *
-	 * @param dt Current time delta [s]
-	 */
-	void controlSpoilers(const float dt);
-
-	void updateActuatorControlsStatus(float dt);
 
 	/**
 	 * Update our local parameter cache.
